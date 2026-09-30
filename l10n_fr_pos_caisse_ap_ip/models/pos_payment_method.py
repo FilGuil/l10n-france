@@ -154,7 +154,7 @@ class PosPaymentMethod(models.Model):
             amount_cent = amount_positive * (10**currency.decimal_places)
         else:
             amount_cent = amount_positive
-        amount_str = str(int(round(amount_cent)))
+        amount_str = str(round(amount_cent))
         data["amount_str"] = amount_str
         msg_dict["CB"] = amount_str
         if len(amount_str) < 2:
