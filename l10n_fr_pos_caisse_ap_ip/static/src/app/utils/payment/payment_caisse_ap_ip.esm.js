@@ -38,13 +38,6 @@ export class PaymentCaisseAPIP extends PaymentInterface {
         return this._handle_error(response.error_message);
     }
 
-    _handle_caisse_ap_ip_unexpected_response(pay_line) {
-        // The response cannot be understood
-        // We let the cashier handle it manually (force or cancel)
-        this._show_error(_t("The terminal response is unclear. Check the terminal receipt before completing the payment manually."));
-        return Promise.reject();
-    }
-
     async sendPaymentRequest(pay_line) {
         await super.sendPaymentRequest(...arguments);
         // Define the timout used in the POS and in the back-end (in ms)
@@ -63,7 +56,6 @@ export class PaymentCaisseAPIP extends PaymentInterface {
                     // The response is a valid object
                     return this._handle_caisse_ap_ip_response(pay_line, response);
                 }
-                return this._handle_caisse_ap_ip_unexpected_response(pay_line);
             })
             .catch((error) => {
                 if (error === undefined) {
