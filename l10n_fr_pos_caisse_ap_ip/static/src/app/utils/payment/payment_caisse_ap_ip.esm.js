@@ -20,7 +20,7 @@ export class PaymentCaisseAPIP extends PaymentInterface {
         super.sendPaymentCancel(...arguments);
         this._show_error(
             _t(
-                "Press the red button on the payment terminal to cancel the transaction."
+                "The terminal response is unclear. Check the terminal receipt before completing the payment manually."
             )
         );
         return true;
