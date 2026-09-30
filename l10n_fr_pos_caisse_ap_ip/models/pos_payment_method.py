@@ -118,7 +118,7 @@ class PosPaymentMethod(models.Model):
             try:
                 cur = pycountry.currencies.get(alpha_3=currency.name)
                 cur_num = cur.numeric  # it returns a string
-            except Exception as e:
+            except (AttributeError, NameError) as e:
                 logger.error(
                     "pycountry doesn't support currency '%s'. Error: %s",
                     currency.name,
@@ -209,7 +209,7 @@ class PosPaymentMethod(models.Model):
                 answer_bytes = sock.recv(BUFFER_SIZE)
                 answer = answer_bytes.decode("ascii")
                 logger.debug("Answer received from payment terminal: %s", answer)
-        except Exception as e:
+        except (OSError, UnicodeError) as e:
             logger.warning("Exception raised in socket to payment terminal: %s", e)
             error_msg = self.env._(
                 "Failure in the connection to the payment terminal"
